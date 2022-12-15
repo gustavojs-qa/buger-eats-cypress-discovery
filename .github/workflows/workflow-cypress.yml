@@ -16,7 +16,10 @@ jobs:
       - name: 'UI Tests - Chrome'
         uses: cypress-io/github-action@v2
         with:
-          command: cypress run --config-file cypress.config.js
+          command: npx cypress run --config-file
+          config/${{github.event.inputs.amb || env.DEFAULT_AMB}}.js --browser
+          ${{github.event.inputs.browser || env.DEFAULT_BROWSER}} --env
+          grepTags=${{github.event.inputs.tag || env.DEFAULT_TAG}}
           install-command: yarn install
           wait-on: ${{ secrets.BASE_URL }}
           wait-on-timeout: 120
